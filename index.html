@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Class 11–12 Science Portal — Fixed</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #10161f;
+      --text: #e8eef7;
+      --muted: #ffffff;
+      --accent: #4cc9f0;
+      --accent-2: #a1ffce;
+      --border: #1f2a37;
+      --shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+    [data-theme="light"]{
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #000000;
+      --accent: #2563eb;
+      --accent-2: #059669;
+      --border: #e5e7eb;
+      --shadow: 0 8px 20px rgba(2,6,23,0.08);
+    }
+    
+
+    
+    
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    /* Preloader Styles */
+  /* Preloader Styles */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    #preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .preloader-content {
+      text-align: center;
+    }
+    
+    .preloader-logo img {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+
+      margin: 0 auto 20px;
+      position: relative;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(76, 201, 240, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 201, 240, 0); }
+    }
+    
+    .preloader-text {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .preloader-spinner {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto;
+      border: 5px solid rgba(76, 201, 240, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--accent);
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg);}
+}
+
+
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,var(--bg),rgba(0,0,0,0));backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--border)}
+    .container{max-width:1200px;margin:0 auto;padding:16px}
+    .row{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo img{width:58px;height:58px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+    h1{font-size:20px;margin:0}
+    .subtitle{color:var(--muted);font-size:12px}
+    .toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:8px 12px;border-radius:999px;background:var(--card);cursor:pointer;box-shadow:var(--shadow);user-select:none}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+    .tab{border:1px solid var(--border);background:var(--card);padding:10px 14px;border-radius:10px;cursor:pointer}
+    .tab.active{outline:2px solid var(--accent)}
+
+    .subject-wrap{display:none}
+    .subject-wrap.active{display:block}
+
+    .subtabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 8px}
+    .subtab{border:1px dashed var(--border);background:var(--card);padding:8px 12px;border-radius:10px;cursor:pointer;font-size:14px}
+    .subtab.active{outline:2px dashed var(--accent)}
+
+    .grid{display:grid;grid-template-columns:repeat(1,1fr);gap:12px}
+    @media (min-width:480px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:720px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (min-width:1024px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;min-height:92px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow);transition: all 0.3s ease;}
+    .card-header{display:flex;flex-direction:column;gap:6px}
+    .card h3{font-size:14px;margin:0}
+    .card p{margin:0;color:var(--muted);font-size:12px}
+    .card .expand-btn{margin-top:auto;border:1px solid var(--border);background:transparent;color:var(--text);padding:8px;border-radius:10px;cursor:pointer}
+    .card:hover{outline:2px solid var(--accent);}    
+    .card.expanded {min-height: auto; grid-column: 1 / -1;}
+    .card-content {display: none;}
+    .card.expanded .card-content {display: block; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px;}
+    .card-content ul {padding-left: 20px; margin: 8px 0;}
+    .card-content li {margin-bottom: 6px; font-size: 14px;}
+
+    .section-title{margin:22px 0 8px;font-size:16px}
+
+    /* Chemistry tools */
+    .tool{display:grid;gap:10px;border:1px solid var(--border);background:var(--card);padding:14px;border-radius:16px;box-shadow:var(--shadow)}
+    .tool input,.tool select{width:100%;padding:10px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--text)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(76,201,240,0.15);border:1px solid var(--border);font-size:12px;margin-right:6px;margin-top:6px}
+
+    /* Search container */
+    .search-container {display: flex;gap: 8px}
+    .search-container input {flex:1;padding: 10px;border: 1px solid var(--border);border-radius:12px;background:transparent;color:var(--text)}
+    .search-btn {border: 1px solid var(--border);background: transparent;color: var(--text);padding: 10px 14px;border-radius:12px;cursor:pointer}
+
+    footer {margin-top: auto;padding: 20px 0;text-align: center;border-top: 1px solid var(--border);background: var(--card)}
+    .footer-content {max-width: 1200px;margin: 0 auto;padding: 0 16px;}
+    .copyright {color: black;font-size: 14px;margin: 0;font-weight: bold}
+    .developers {margin-top: 8px;font-size: 14px;color: black;font-weight: bold}
+    .heart {color: #ff5252;display: inline-block;margin: 0 4px}
+
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+<div id="preloader">
+    <div class="preloader-content">
+      <div class="preloader-logo">
+        <img src="logo.png.jpg" alt="">
+      </div>
+      <div class="preloader-text">Oxbridge Academy</div>
+      <div class="preloader-spinner"></div>
+    </div>
+</div>
+
+  <header>
+    <div class="container">
+      <div class="row">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <img src="logo.png.jpg" alt="Oxbridge Academy Logo">
+          </div>
+          <div>
+            <h1>Oxbridge Academy — Class 11 & 12 Science</h1>
+            <div class="subtitle">Chemistry · Physics · Biology</div>
+          </div>
+        </div>
+        <div>
+          <button id="themeBtn" class="toggle" title="Toggle theme">🌗 <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-subject="chemistry" role="tab">⚗️ Chemistry</button>
+        <button class="tab" data-subject="physics" role="tab">⚛ Physics</button>
+        <button class="tab" data-subject="biology" role="tab">🧬 Biology</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Chemistry -->
+    <section id="chemistry" class="subject-wrap active" role="tabpanel">
+      <h2 class="section-title">Chemistry Tools</h2>
+      <div class="tool">
+        <strong>Element & Group Finder</strong>
+        <label>Search by symbol or name</label>
+        <div class="search-container">
+          <input id="elSearch" placeholder="e.g., Fe or Iron" />
+          <button id="elSearchBtn" class="search-btn">Search</button>
+        </div>
+        <div id="elResult" class="helper">Type a symbol/name and press Enter or tap Search.</div>
+        <div style="height:1px;background:var(--border);"></div>
+        <label>Browse by group</label>
+        <select id="groupSelect"></select>
+        <div id="groupResult" class="helper">Pick a group to see key members.</div>
+      </div>
+
+      <h2 class="section-title">Chemistry — Class 11</h2>
+      <div id="chem11" class="grid"></div>
+
+      <h2 class="section-title">Chemistry — Class 12</h2>
+      <div id="chem12" class="grid"></div>
+    </section>
+
+    <!-- Physics -->
+    <section id="physics" class="subject-wrap" role="tabpanel">
+      <div class="subtabs" role="tablist">
+        <button class="subtab active" data-class="phy11">Class 11</button>
+        <button class="subtab" data-class="phy12">Class 12</button>
+      </div>
+      <div id="phy11" class="grid"></div>
+      <div id="phy12" class="grid" style="display:none"></div>
+    </section>
+
+    <!-- Biology -->
+    <section id="biology" class="subject-wrap" role="tabpanel">
+      <div class="subtabs" role="tablist">
+        <button class="subtab active" data-class="bio11">Class 11</button>
+        <button class="subtab" data-class="bio12">Class 12</button>
+      </div>
+      <div id="bio11" class="grid"></div>
+      <div id="bio12" class="grid" style="display:none"></div>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <p class="copyright">® All Rights Reserved by Oxbridge Academy 2025</p>
+      <p class="developers">Developed with <span class="heart">❤</span> <br>by Shahzaib Wajid and Farman</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Preloader Logic =====
+   // ===== Preloader Logic =====
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('hidden');
+        
+        // Remove preloader from DOM after transition completes
+        setTimeout(function() {
+          preloader.style.display = 'none';
+        }, 500);
+      }, 1500); // Show preloader for at least 1.5 seconds
+});
+
+    // ===== Theme Toggle =====
+    const themeBtn = document.getElementById('themeBtn');
+    const themeLabel = document.getElementById('themeLabel');
+    function setTheme(mode){
+      document.documentElement.setAttribute('data-theme', mode);
+      localStorage.setItem('theme', mode);
+      themeLabel.textContent = mode === 'light' ? 'Light' : 'Dark';
+    }
+    setTheme(localStorage.getItem('theme') || 'dark');
+    themeBtn.addEventListener('click', ()=>{
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    // ====== Subject Tabs ======
+    document.querySelectorAll('.tab').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.subject-wrap').forEach(s=>s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.subject).classList.add('active');
+      })
+    })
+
+    // ====== Subtabs (Physics/Biology classes) ======
+    document.querySelectorAll('#physics .subtab').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('#physics .subtab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('phy11').style.display = btn.dataset.class==='phy11' ? 'grid' : 'none';
+        document.getElementById('phy12').style.display = btn.dataset.class==='phy12' ? 'grid' : 'none';
+      });
+    });
+    document.querySelectorAll('#biology .subtab').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('#biology .subtab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('bio11').style.display = btn.dataset.class==='bio11' ? 'grid' : 'none';
+        document.getElementById('bio12').style.display = btn.dataset.class==='bio12' ? 'grid' : 'none';
+      });
+    });
+
+    // ===== Cards Renderer & topic metadata =====
+    function humanize(file){
+      return file.replace(/[-_]/g,' ').replace(/\.pdf$/,'').replace(/\b\w/g, c=>c.toUpperCase());
+    }
+
+    // --- Developer: put authoritative, topic-specific key concepts & resources here ---
+    const TOPIC_META = {
+      /* CHEM 11 */
+      'some-basic-concepts-of-chemistry': {
+        shortDesc: 'Fundamental principles of matter, measurements, and chemical calculations',
+        keyConcepts: [
+          'Importance and scope of chemistry in daily life and various fields',
+          'Laws of chemical combinations: Law of conservation of mass, definite proportions, multiple proportions, Gay-Lussac\'s law of gaseous volumes, and Avogadro\'s law',
+          'Dalton\'s atomic theory: Concepts of atoms, molecules, and elements',
+          'Mole concept, Avogadro\'s number (6.022 × 10^23), and molar mass calculations',
+          'Percentage composition, empirical and molecular formula determination',
+          'Stoichiometry, limiting reagents, and yield calculations in chemical reactions',
+          'Concentration terms: Molarity, molality, normality, mole fraction, and mass percentage',
+          'Precision, accuracy, significant figures, and dimensional analysis in measurements'
+        ],
+        studyResources: ['Worked examples on mole problems and stoichiometry','Solved numerical sheets on concentration and empirical formulas','Video walkthroughs for mole concept and laws of combinations','NCERT textbook exercises and solutions','Previous year CBSE question papers with answers']
+      },
+      'structure-of-atom': {
+        shortDesc: 'Evolution of atomic models, quantum mechanics, and electron distribution',
+        keyConcepts: ['Discovery of subatomic particles: Electron, proton, neutron, and their properties','Atomic models: Thomson\'s plum pudding, Rutherford\'s nuclear model, and its limitations','Bohr\'s model of hydrogen atom: Postulates, energy levels, and spectral lines','Quantum mechanical model: Wave-particle duality, de Broglie relation, and Heisenberg uncertainty principle','Quantum numbers: Principal, azimuthal, magnetic, and spin','Shapes of atomic orbitals: s, p, d, f orbitals and their orientations','Electronic configuration: Aufbau principle, Pauli exclusion principle, and Hund\'s rule of maximum multiplicity','Stability of half-filled and completely filled orbitals'],
+        studyResources: ['Orbital diagrams and electronic configuration practice sheets','Photoelectric effect and Bohr model conceptual notes','Quantum numbers assignment problems','Animated videos on atomic models evolution','NCERT exemplar problems and solutions']
+      },
+      'classification-of-elements': {
+        shortDesc: 'Periodic table organization, trends, and element properties',
+        keyConcepts: ['Historical development: Dobereiner\'s triads, Newlands\' law of octaves, Mendeleev\'s periodic table','Modern periodic law and long form of periodic table','Nomenclature of elements with atomic number >100','Periodic trends in properties: Atomic and ionic radii, ionization enthalpy, electron gain enthalpy, electronegativity, and valency','s, p, d, f block elements and their general characteristics','Diagonal relationships and anomalous properties of second period elements','Periodic trends in chemical reactivity and metallic/non-metallic character'],
+        studyResources: ['Periodic trends summary tables and graphs','Group-wise and period-wise properties comparison sheets','Practice questions on predicting element properties','Interactive periodic table apps or websites','CBSE board exam trend analysis for this chapter']
+      },
+      'chemical-bonding': {
+        shortDesc: 'Types of bonds, molecular structures, and bonding theories',
+        keyConcepts: ['Octet rule, Lewis structures, and formal charges','Ionic bonding: Lattice energy, Born-Haber cycle, and factors affecting ionic bond formation','Covalent bonding: Polar and non-polar bonds, electronegativity difference','Valence Bond Theory (VBT): Overlap of orbitals, sigma and pi bonds','Hybridization: sp, sp2, sp3, sp3d, sp3d2 with examples like CH4, SF6','Molecular Orbital Theory (MOT): Bonding and antibonding orbitals, bond order, magnetic properties','VSEPR theory: Predicting molecular shapes, bond angles, and lone pair effects','Hydrogen bonding and its effects on physical properties'],
+        studyResources: ['Molecular geometry and hybridization practice problems','Lewis structure drawing exercises','Bond polarity and dipole moment calculations','3D molecular model building activities','Video explanations of VBT vs MOT']
+      },
+      'states-of-matter': {
+        shortDesc: 'Properties of gases, liquids, and intermolecular interactions',
+        keyConcepts: ['Intermolecular forces: Van der Waals, dipole-dipole, hydrogen bonding, and their strengths','Kinetic molecular theory of gases: Postulates and derivations','Ideal gas equation: PV = nRT, and gas laws (Boyle, Charles, Gay-Lussac, Avogadro)','Deviation from ideal behavior: Real gases, compressibility factor, van der Waals equation','Liquefaction of gases: Critical temperature, pressure, volume','Liquid state: Vapor pressure, boiling point, surface tension, viscosity','Gaseous state calculations: Density, diffusion (Graham\'s law), partial pressures (Dalton\'s law)'],
+        studyResources: ['PV=nRT and gas law numerical problems','Phase diagrams and critical point interpretation notes','Real gas behavior graphs and van der Waals constant tables','Experiments on gas diffusion and liquefaction','Online simulations for kinetic theory']
+      },
+      'thermodynamics': {
+        shortDesc: 'Energy changes in chemical processes and spontaneity',
+        keyConcepts: ['Thermodynamic terms: System, surroundings, state functions, extensive/intensive properties','First law of thermodynamics: ΔU = q + w, work in expansion/compression','Enthalpy (H): Relation with internal energy, calorimetric measurements','Hess\'s law of constant heat summation and applications','Bond enthalpies, lattice energies, and Born-Haber cycle','Second law: Entropy (S), spontaneity, and ΔS calculations','Gibbs free energy (G): ΔG = ΔH - TΔS, relation to equilibrium constant','Third law: Absolute entropy and its implications'],
+        studyResources: ['Hess’s law multi-step problems','Thermochemical equations and calorimetry exercises','Entropy and free energy prediction worksheets','Video series on thermodynamic laws','Lab manuals for heat of reaction experiments']
+      },
+      'equilibrium': {
+        shortDesc: 'Dynamic nature of equilibrium in chemical systems',
+        keyConcepts: ['Equilibrium in physical processes: Solid-liquid, liquid-vapor, solid-vapor','Chemical equilibrium: Dynamic nature, law of mass action','Equilibrium constant: Kc, Kp, relation between them, units','Factors affecting equilibrium: Le Chatelier\'s principle (concentration, pressure, temperature, catalyst)','Ionic equilibrium: Strong/weak electrolytes, ionization constants','Acids and bases: Arrhenius, Bronsted-Lowry, Lewis concepts, pH scale','Buffer solutions: Types, mechanism, Henderson-Hasselbalch equation','Solubility product (Ksp) and common ion effect'],
+        studyResources: ['ICE table method for equilibrium calculations','Le Chatelier\'s principle application problems','pH and buffer solution numericals','Acid-base titration curves analysis','NCERT-based question banks']
+      },
+      'redox-reactions': {
+        shortDesc: 'Oxidation-reduction processes and electrochemical applications',
+        keyConcepts: ['Classical and electronic concepts of oxidation and reduction','Oxidation numbers: Rules for assignment, calculation in compounds','Balancing redox equations: Ion-electron method and oxidation number method','Redox reactions in terms of electrode potentials','Electrochemical cells: Galvanic and electrolytic cells, cell notation','Standard electrode potential and electrochemical series','Nernst equation and its applications in concentration cells','Applications: Corrosion, batteries, fuel cells'],
+        studyResources: ['Balancing complex redox equations practice','Electrode potential and spontaneity problems','Electrochemical series usage worksheets','Videos on galvanic cell setup','Lab experiments on redox titrations']
+      },
+      'hydrogen': {
+        shortDesc: 'Properties, preparation, and compounds of hydrogen',
+        keyConcepts: ['Position of hydrogen in periodic table and its unique behavior','Isotopes: Protium, deuterium, tritium and their properties','Preparation methods: Laboratory, industrial (water-gas, Bosch process)','Physical and chemical properties: As reducing agent, combustion','Hydrides: Ionic, covalent, metallic types and their characteristics','Water: Structure, hard/soft water, removal of hardness','Hydrogen peroxide: Preparation, properties, structure, uses','Heavy water and hydrogen economy'],
+        studyResources: ['Hydrogen preparation methods comparison charts','Hydride classification and properties notes','H2O2 concentration calculations','Industrial applications case studies','Quiz on hydrogen isotopes']
+      },
+      's-block-element': {
+        shortDesc: 'Alkali and alkaline earth metals: Properties and compounds',
+        keyConcepts: ['General characteristics: Electronic configuration, atomic/ionic radii, ionization enthalpy','Group 1 (Alkali metals): Occurrence, extraction, physical/chemical properties','Important compounds: NaOH, Na2CO3, NaHCO3, K2CO3','Group 2 (Alkaline earth metals): Occurrence, extraction, properties','Compounds: CaO, CaCO3, CaSO4, MgSO4, Be and Mg anomalies','Biological importance of Na, K, Mg, Ca','Industrial uses: Soda ash, lime, plaster of Paris'],
+        studyResources: ['Group trends graphs and tables','Compound preparation and reaction equations','Anomalous behavior explanation notes','Previous year questions on extraction','Videos on flame tests for s-block']
+      },
+      'p-block-element-group-13-14': {
+        shortDesc: 'Boron and carbon family elements and compounds',
+        keyConcepts: ['Group 13 (Boron family): Electronic config, inert pair effect, oxidation states','Boron: Occurrence, isolation, properties, compounds (borax, boric acid, diborane)','Aluminium: Extraction (Hall-Heroult), properties, uses, compounds (alum)','Group 14 (Carbon family): Allotropes of carbon (diamond, graphite, fullerenes)','Carbon compounds: CO, CO2, carbides, silicones','Silicon: Occurrence, extraction, silicates, zeolites','Tin and lead: Properties, oxidation states, compounds'],
+        studyResources: ['Allotrope structures and properties comparison','Diborane and alum reaction mechanisms','Inert pair effect examples','Industrial extraction flowcharts','Lab notes on borax bead test']
+      },
+      'organic-chemistry-basics': {
+        shortDesc: 'Fundamental principles, nomenclature, and isomerism in organics',
+        keyConcepts: ['Tetravalency of carbon, catenation, hybridization in organics','Classification: Acyclic/alicyclic, aromatic/aliphatic, functional groups','IUPAC nomenclature: Alkanes, alkenes, alkynes, haloalkanes, alcohols, etc.','Isomerism: Structural (chain, position, functional, metamers, tautomers)','Stereoisomerism: Geometrical (cis-trans), optical (chirality, enantiomers)','Purification methods: Crystallization, distillation, chromatography','Qualitative analysis: Detection of C, H, N, S, halogens','Quantitative analysis: Estimation of C, H, N (Kjeldahl, Dumas)'],
+        studyResources: ['Nomenclature practice worksheets','Isomer drawing exercises','Functional group identification quizzes','Purification technique lab manuals','Video tutorials on stereoisomerism']
+      },
+      'hydrocarbons': {
+        shortDesc: 'Alkanes, alkenes, alkynes, and aromatic compounds',
+        keyConcepts: ['Alkanes: Preparation (Wurtz, Kolbe), properties, free radical substitution','Alkenes: Preparation (dehydration, dehydrohalogenation), addition reactions (Markovnikov, anti-Markovnikov)','Alkynes: Preparation, acidic nature, addition reactions','Aromaticity: Huckel\'s rule, benzene structure (resonance)','Preparation of benzene: From phenol, acetylene, etc.','Electrophilic aromatic substitution: Halogenation, nitration, sulfonation','Directive influence of substituents','Carcinogenicity and toxicity of hydrocarbons'],
+        studyResources: ['Reaction mechanism diagrams for additions','Benzene substitution pattern predictions','Conformational analysis of alkanes','Solved problems on hydrocarbon preparations','Online reaction simulators']
+      },
+      'environmental-chemistry': {
+        shortDesc: 'Pollution types, effects, and green chemistry principles',
+        keyConcepts: ['Environmental pollution: Air, water, soil - causes and effects','Air pollutants: CO, SOx, NOx, particulates, smog (classical, photochemical)','Ozone layer depletion: CFCs, mechanism, consequences','Greenhouse effect: Global warming, acid rain','Water pollution: BOD, COD, eutrophication, treatment methods','Soil pollution: Pesticides, industrial wastes','Strategies for pollution control, waste management','Green chemistry: Principles and applications'],
+        studyResources: ['Pollutant sources and effects charts','Case studies on environmental disasters (Bhopal, Chernobyl)','Green chemistry examples and problems','Documentaries on climate change','Project ideas on pollution monitoring']
+      },
+
+      /* CHEM 12 */
+      'solid-state': {
+        shortDesc: 'Crystal structures, defects, and properties of solids',
+        keyConcepts: ['Classification: Amorphous/crystalline, molecular/ionic/covalent/metallic solids','Crystal lattices: Unit cells, Bravais lattices, packing efficiency','Calculations: Density, coordination number, radius ratio','Defects: Point (vacancies, interstitials), line defects, non-stoichiometric','Electrical properties: Conductors, insulators, semiconductors (n/p type)','Magnetic properties: Para, dia, ferro, antiferro, ferri magnetism','Dielectric properties and superconductivity basics'],
+        studyResources: ['Crystal structure model building','Packing efficiency numerical problems','Defect type identification quizzes','Videos on semiconductor doping','NCERT exemplar on solid calculations']
+      },
+      'solutions': {
+        shortDesc: 'Types, concentration, colligative properties, and abnormalities',
+        keyConcepts: ['Types: Solid, liquid, gaseous solutions, solubility factors','Concentration units: Molarity, molality, mole fraction, ppm','Ideal/non-ideal solutions: Raoult\'s law, deviations','Colligative properties: Vapor pressure lowering, boiling point elevation, freezing point depression, osmotic pressure','Van\'t Hoff factor: For dissociation/association','Abnormal molar masses and degree of dissociation','Henry\'s law for gas solubility','Applications: Isotonic solutions, reverse osmosis'],
+        studyResources: ['Colligative property numericals with van\'t Hoff','Raoult\'s law graphs for deviations','Solubility curve interpretations','Lab experiments on osmosis','Question banks on solution types']
+      },
+      'electrochemistry': {
+        shortDesc: 'Electrochemical cells, conductance, and applications',
+        keyConcepts: ['Redox reactions in electrochemical cells: Anode/cathode processes','Conductance: Specific, equivalent, molar conductivity, Kohlrausch\'s law','Electrolytic cells: Faraday\'s laws of electrolysis, quantitative aspects','Galvanic cells: EMF, standard electrode potential, Nernst equation','Concentration cells and their EMF','Batteries: Primary (dry cell), secondary (lead-acid, Ni-Cd)','Fuel cells and corrosion as electrochemical process','Applications in electroplating and purification'],
+        studyResources: ['Nernst equation problems on concentration','Faraday\'s law electrolysis calculations','Battery types comparison charts','Videos on cell construction','Lab manuals for potentiometric titrations']
+      },
+      'chemical-kinetics': {
+        shortDesc: 'Reaction rates, orders, and influencing factors',
+        keyConcepts: ['Rate of reaction: Average/instantaneous, rate law expression','Order and molecularity: Differences, determination methods','Integrated rate equations: Zero, first, second order derivations','Half-life periods and their relations to order','Temperature dependence: Arrhenius equation, activation energy','Catalysis: Homogeneous/heterogeneous, enzyme catalysis','Collision theory and reaction mechanisms','Factors affecting rate: Concentration, temperature, catalyst'],
+        studyResources: ['Rate law determination from data','Graphical methods for order identification','Activation energy calculation problems','Mechanism proposal exercises','Animated simulations of collisions']
+      },
+      'surface-chemistry': {
+        shortDesc: 'Adsorption, colloids, and catalytic phenomena',
+        keyConcepts: ['Adsorption: Physisorption/chemisorption, isotherms (Freundlich, Langmuir)','Factors affecting adsorption: Temperature, pressure, surface area','Catalysis: Promoters, poisons, autocatalysis','Colloids: Types (lyophilic/lyophobic), preparation methods (dispersion, condensation)','Properties of colloids: Tyndall effect, Brownian motion, electrophoresis','Coagulation: Hardy-Schulze rule, protection by lyophilic colloids','Emulsions: Types, emulsifiers, applications','Micelles: Critical micelle concentration, cleansing action'],
+        studyResources: ['Adsorption isotherm plotting','Colloid preparation lab notes','Catalysis example problems','Videos on emulsion stability','Question sets on surface phenomena']
+      },
+      'isolation-of-elements': {
+        shortDesc: 'Metallurgical processes for metal extraction',
+        keyConcepts: ['Occurrence of metals: Minerals, ores, gangue','Concentration: Froth flotation, magnetic separation, leaching','Extraction: Pyrometallurgy, hydrometallurgy, electrolytic methods','Thermodynamic principles: Ellingham diagrams, reduction potentials','Extraction of Al, Cu, Zn, Fe: Detailed processes','Refining: Distillation, liquation, electrolytic refining, zone refining','Extraction of non-metals: Like Cl2, Br2','Role of carbon and other reducing agents'],
+        studyResources: ['Flowcharts for metal extractions','Ellingham diagram interpretations','Refining method comparisons','Case studies on industrial metallurgy','Videos on Bayer\'s process for alumina']
+      },
+      'p-block-element-group-15-18': {
+        shortDesc: 'Nitrogen, oxygen, halogen, and noble gas families',
+        keyConcepts: ['Group 15: Trends, nitrogen fixation, allotropes of P, As, Sb, Bi','Nitrogen compounds: NH3, HNO3, nitrates, nitrites','Phosphorus compounds: PCl3, PCl5, phosphine, fertilizers','Group 16: Trends, allotropes of O, S, Se, Te','Oxygen compounds: O2, O3, H2O2, SO2, H2SO4','Group 17: Trends, interhalogen compounds, polyhalides','Halogen compounds: HX acids, oxoacids (HClO4 etc.), bleaching powder','Group 18: Noble gases, compounds like XeF2, XeO3, clathrates'],
+        studyResources: ['Compound preparation reactions','Trend analysis tables for p-block','Oxoacid structures and strengths','Videos on Haber process for NH3','Lab tests for halides']
+      },
+      'd-block-element': {
+        shortDesc: 'Transition metals: Properties, compounds, and applications',
+        keyConcepts: ['General properties: Variable oxidation states, colored compounds, magnetic properties','Electronic configuration, atomic/ionic radii trends','Ionization enthalpies, electrode potentials','Preparation and properties of K2Cr2O7, KMnO4','Alloys: Steel types, interstitial compounds','Catalysis by transition metals','Lanthanoids and actinoids contraction (brief)','Applications in pigments, batteries, magnets'],
+        studyResources: ['Oxidation state stability charts','Redox reactions with KMnO4/K2Cr2O7','Magnetic property calculations','Videos on transition metal complexes','Question papers on d-block trends']
+      },
+      'f-block-element': {
+        shortDesc: 'Lanthanoids and actinoids: Properties and uses',
+        keyConcepts: ['Electronic configuration of lanthanoids and actinoids','Lanthanoid contraction and its consequences','Oxidation states, color, magnetic properties of f-block','Chemical reactivity and separation methods (ion exchange)','Compounds: Oxides, halides, coordination compounds','Actinoids: Radioactivity, transuranic elements','Uses: In alloys, ceramics, nuclear energy','Comparison between lanthanoids and actinoids'],
+        studyResources: ['Contraction effect on properties notes','Separation technique flowcharts','Radioactivity applications case studies','Videos on rare earth elements','NCERT questions on f-block']
+      },
+      'haloalkanes-haloarenes': {
+        shortDesc: 'Halogenated hydrocarbons: Reactions and environmental impact',
+        keyConcepts: ['Nomenclature and classification of haloalkanes/arenes','Preparation: From alcohols, alkenes, diazonium salts','Physical properties: Boiling points, solubility','Nucleophilic substitution: SN1, SN2 mechanisms, stereochemistry','Elimination reactions: E1, E2, Saytzeff rule','Reactions with metals: Grignard, Wurtz','Polyhalogen compounds: CHCl3, CCl4, freons, DDT','Uses and environmental effects (ozone depletion)'],
+        studyResources: ['Mechanism diagrams for SN/E reactions','Stereochemistry problems on inversion/retention','Environmental impact essays','Lab synthesis of iodoform','Reaction scheme practice']
+      },
+      'alcohols-phenols-ethers': {
+        shortDesc: 'Oxygen-containing organics: Synthesis and reactions',
+        keyConcepts: ['Classification: Primary/secondary/tertiary alcohols, phenols, ethers','Preparation of alcohols: Hydration, hydroboration, Grignard','Physical properties: Hydrogen bonding effects','Acidic nature of phenols, comparison with alcohols','Reactions of alcohols: Dehydration, oxidation, esterification','Phenols: Electrophilic substitution, Reimer-Tiemann, Kolbe','Ethers: Preparation (Williamson), cleavage with HI','Uses: As solvents, antiseptics, fuels'],
+        studyResources: ['Reaction mechanisms for phenol syntheses','Acidity order prediction quizzes','Dehydration product problems','Videos on Lucas test for alcohols','Industrial application notes']
+      },
+      'aldehydes-ketones-carboxylic-acids': {
+        shortDesc: 'Carbonyl compounds and derivatives',
+        keyConcepts: ['Nomenclature and structure of carbonyl group','Preparation of aldehydes/ketones: Oxidation, ozonolysis, Gattermann','Nucleophilic addition: HCN, NaHSO3, Grignard, reduction','Oxidation reactions: Tollens, Fehling, iodoform test','Aldol condensation, Cannizzaro reaction','Carboxylic acids: Preparation, acidity, esterification, decarboxylation','Derivatives: Acid chlorides, amides, anhydrides reactions','Uses in polymers, pharmaceuticals'],
+        studyResources: ['Carbonyl reaction flowcharts','Distinguishing test problems','Condensation mechanism exercises','Lab notes on silver mirror test','Question sets on acidity comparisons']
+      },
+      'amines': {
+        shortDesc: 'Nitrogen-containing organics: Basicity and reactions',
+        keyConcepts: ['Classification: Primary/secondary/tertiary amines, aliphatic/aromatic','Preparation: Reduction of nitro, amides; Gabriel synthesis','Basicity: Order in gas/aqueous phase, effect of substituents','Reactions: Alkylation, acylation, carbylamine, Hinsberg test','Diazonium salts: Preparation, Sandmeyer, azo coupling','Aromatic amines: Aniline properties, electrophilic substitution','Uses: Dyes, drugs, polymers','Toxicity and carcinogenicity'],
+        studyResources: ['Basicity order explanation notes','Diazonium reaction schemes','Hinsberg test distinction quizzes','Videos on amine preparations','Synthesis problems for dyes']
+      },
+      'biomolecules': {
+        shortDesc: 'Biological molecules: Structure and functions',
+        keyConcepts: ['Carbohydrates: Classification (mono/oligo/poly), glucose/fructose structures','Reactions: Glycosidic bonds, mutarotation, reducing sugars','Proteins: Amino acids, peptide bonds, structure levels (1°-4°)','Denaturation and enzymes as biocatalysts','Nucleic acids: DNA/RNA components, double helix, replication','Vitamins: Classification, deficiency diseases','Hormones: Types and functions (brief)','Metabolism basics'],
+        studyResources: ['Biomolecule structure diagrams','Enzyme kinetics graphs','Vitamin deficiency tables','Videos on DNA replication','Lab tests for carbohydrates/proteins']
+      },
+      'polymers': {
+        shortDesc: 'Macromolecules: Types, synthesis, and applications',
+        keyConcepts: ['Classification: Natural/synthetic, addition/condensation, elastomers/fibers','Addition polymerization: Free radical, ionic mechanisms (PE, PVC)','Condensation: Polyamides (nylon), polyesters (terylene), bakelite','Molecular mass: Number/weight average, PDI','Biodegradable polymers: PHBV, nylon-2-nylon-6','Rubbers: Natural, vulcanization, synthetic (neoprene)','Uses: Plastics, fibers, adhesives','Environmental impact and recycling'],
+        studyResources: ['Polymerization mechanism problems','Classification charts with examples','Biodegradable vs non-biodegradable comparisons','Videos on vulcanization process','Project on polymer applications']
+      },
+      'chemistry-in-everyday-life': {
+        shortDesc: 'Chemical applications in drugs, food, and cleansers',
+        keyConcepts: ['Drugs: Classification (analgesics, antibiotics, antacids), target interactions','Drug design: Antagonists, agonists, side effects','Chemotherapy: Broad/narrow spectrum antibiotics','Food additives: Preservatives, sweeteners, flavors','Soaps and detergents: Cleansing action, types (anionic/cationic)','Synthetic detergents vs soaps, environmental concerns','Chemicals in cosmetics and dyes','Green chemistry in everyday products'],
+        studyResources: ['Drug classification tables','Additive function lists','Soap micelle diagrams','Videos on antibiotic resistance','Case studies on drug development']
+      },
+
+      /* PHYSICS 11 */
+      'physical-world-measurement': {
+        shortDesc: 'Introduction to physics, units, and error analysis',
+        keyConcepts: ['Scope of physics: Macroscopic to microscopic phenomena','Fundamental forces: Gravitational, electromagnetic, strong/weak nuclear','Units: SI system, base/derived units, conversions','Dimensions: Analysis, homogeneity principle, applications','Errors: Systematic/random, least count, propagation','Significant figures rules in calculations','Accuracy vs precision','Scientific notation and order of magnitude'],
+        studyResources: ['Dimensional analysis problems','Error propagation exercises','Unit conversion worksheets','Videos on fundamental forces','Lab manuals for measurement instruments']
+      },
+      'kinematics': {
+        shortDesc: 'Description of motion in one and two dimensions',
+        keyConcepts: ['Scalars/vectors: Addition, subtraction, dot/cross products','Motion in straight line: Position, displacement, velocity, acceleration','Equations of motion: v = u + at, s = ut + (1/2)at^2, v^2 = u^2 + 2as','Graphs: Position-time, velocity-time, acceleration-time','Relative velocity in 1D','Projectile motion: Trajectory equation, max height, range','Uniform circular motion: Centripetal acceleration, angular velocity','Motion in vertical circle (brief)'],
+        studyResources: ['Projectile motion numericals','Vector resolution problems','Graph interpretation quizzes','Animated simulations of trajectories','Previous year kinematics questions']
+      },
+      'laws-of-motion': {
+        shortDesc: 'Newton\'s laws and their applications in dynamics',
+        keyConcepts: ['Inertia and Newton\'s first law','Force, momentum, Newton\'s second law: F = ma, impulse','Newton\'s third law: Action-reaction pairs, conservation of momentum','Friction: Static/kinetic, laws, coefficients, angle of repose','Free body diagrams for complex systems','Motion on inclined planes, pulleys, elevators','Centripetal force in circular motion','Conservation of linear momentum in collisions'],
+        studyResources: ['FBD drawing practice','Friction and pulley problems','Momentum conservation exercises','Videos on Newton\'s laws demos','Lab experiments with Atwood machine']
+      },
+      'work-energy-power': {
+        shortDesc: 'Energy transformations and mechanical power',
+        keyConcepts: ['Work: By constant/variable force, dot product, positive/negative','Kinetic energy: Theorem connecting work and KE','Potential energy: Gravitational, spring, conservative forces','Conservation of mechanical energy','Power: Instantaneous/average, watt, horsepower','Collisions: Elastic/inelastic, coefficient of restitution','Work by friction and non-conservative forces','Energy diagrams and stability'],
+        studyResources: ['Work-energy theorem applications','Collision type problems','Power calculation numericals','Spring potential energy graphs','Online energy conservation simulators']
+      },
+      'motion-of-system-of-particles': {
+        shortDesc: 'Center of mass, rigid body dynamics basics',
+        keyConcepts: ['Center of mass (CM): Definition, position for systems','Motion of CM: External forces, conservation laws','Linear momentum conservation in systems','Rigid body: Rotational motion intro, moment of inertia','Torque and angular momentum','Equilibrium of rigid bodies','Rolling motion: Pure rolling, kinetic energy','Collisions involving rotation (brief)'],
+        studyResources: ['CM calculation for irregular shapes','Torque and equilibrium problems','Moment of inertia tables and derivations','Videos on rigid body rotations','Practice on rolling without slipping']
+      },
+      'gravitation': {
+        shortDesc: 'Universal law and gravitational fields',
+        keyConcepts: ['Newton\'s law of gravitation: F = G m1 m2 / r^2','Gravitational field strength, potential','Acceleration due to gravity: g, variations with altitude/depth/latitude','Kepler\'s laws of planetary motion','Orbital velocity, escape velocity','Gravitational potential energy','Satellites: Geostationary, polar, binding energy','Black holes and gravitational waves (intro)'],
+        studyResources: ['Orbital mechanics numericals','Kepler\'s laws application problems','g variation graphs','Videos on satellite launches','Escape velocity derivations']
+      },
+      'properties-of-bulk-matter': {
+        shortDesc: 'Mechanical and thermal properties of matter',
+        keyConcepts: ['Elasticity: Stress, strain, Young\'s/Bulk/Shear modulus, Poisson\'s ratio','Hooke\'s law, elastic potential energy','Viscosity: Stokes\' law, terminal velocity','Surface tension: Angle of contact, capillary action','Fluid pressure: Pascal\'s law, hydrostatics','Buoyancy: Archimedes\' principle, flotation','Bernoulli\'s theorem and applications (Venturi, aerofoil)','Thermal expansion: Linear/area/volume coefficients'],
+        studyResources: ['Elastic modulus calculations','Surface tension experiments','Bernoulli application problems','Videos on fluid dynamics','Lab notes on viscosity measurement']
+      },
+      'thermodynamics-physics': {
+        shortDesc: 'Heat transfer, laws, and engines',
+        keyConcepts: ['Thermal equilibrium, zeroth law, temperature scales','First law: ΔQ = ΔU + ΔW, specific heats','Work in isothermal/adiabatic processes','Second law: Carnot engine, efficiency, refrigerator','Entropy and irreversibility','Heat transfer: Conduction, convection, radiation (Stefan\'s law)','Newton\'s law of cooling','Ideal gas processes: PV diagrams, efficiency'],
+        studyResources: ['Carnot cycle problems','Heat transfer numericals','PV diagram analysis','Videos on heat engines','Lab calorimetric experiments']
+      },
+      'kinetic-theory': {
+        shortDesc: 'Molecular basis of gas behavior',
+        keyConcepts: ['Postulates of kinetic theory','Derivation of pressure: P = (1/3) ρ v_rms^2','Ideal gas equation from kinetic theory','Degrees of freedom, equipartition of energy','Specific heats: Cp - Cv = R, γ = Cp/Cv','Mean free path, Brownian motion','Real gases and van der Waals corrections','Avogadro\'s hypothesis and Loschmidt number'],
+        studyResources: ['Kinetic energy derivations','Specific heat ratio problems','Mean free path calculations','Animations of molecular motions','Question sets on gas laws']
+      },
+      'oscillations-waves': {
+        shortDesc: 'Periodic motions and wave propagation',
+        keyConcepts: ['Simple harmonic motion (SHM): Equation, phase, energy','Oscillations: Spring, simple/compound pendulum, damped/forced','Resonance and beats','Waves: Transverse/longitudinal, wave equation, speed','Superposition: Interference, stationary waves','Sound waves: Speed, Doppler effect, intensity','Musical instruments: Strings, pipes (open/closed)','Electromagnetic waves intro'],
+        studyResources: ['SHM graph problems','Doppler effect numericals','Stationary wave patterns','Videos on resonance demos','Lab on pendulum periods']
+      },
+
+      /* PHYSICS 12 */
+      'electrostatics': {
+        shortDesc: 'Electric charges, fields, and potential',
+        keyConcepts: ['Coulomb\'s law: Force between charges, superposition','Electric field: Lines, due to point/dipole/uniform','Gauss\'s law: Applications to symmetric charge distributions','Electric potential: Relation to field, equipotential surfaces','Capacitors: Capacitance, parallel/series, energy stored','Dielectrics: Polarization, dielectric constant, van de Graaff','Electric dipole: Moment, torque, potential energy','Conductors: Charge distribution, electrostatic shielding'],
+        studyResources: ['Gauss\'s law flux problems','Capacitor network calculations','Dipole field derivations','Videos on electrostatic experiments','Lab on charging by induction']
+      },
+      'current-electricity': {
+        shortDesc: 'Electric current, resistance, and circuits',
+        keyConcepts: ['Current: Drift velocity, mobility, Ohm\'s law','Resistance: Resistivity, temperature dependence (NTC/PTC)','Kirchhoff\'s laws: Loop and junction rules','Wheatstone bridge, meter bridge, potentiometer','Cells: EMF, internal resistance, grouping','Heating effect: Joule\'s law, power','RC circuits: Charging/discharging (brief)','Superconductors and applications'],
+        studyResources: ['Kirchhoff\'s law circuit problems','Potentiometer applications','Resistivity numericals','Videos on bridge balancing','Lab measurements of resistance']
+      },
+      'magnetic-effects-of-current': {
+        shortDesc: 'Magnetic fields due to currents and forces',
+        keyConcepts: ['Biot-Savart law: Field due to straight wire, loop, solenoid','Ampere\'s circuital law: Applications to infinite wire, toroid','Force on moving charge: Lorentz force, cyclotron','Force on current-carrying wire: In uniform field','Torque on current loop: Magnetic dipole moment','Moving coil galvanometer: Sensitivity, ammeter/voltmeter','Earth\'s magnetic field: Elements, neutral points','Magnetic materials: Dia/para/ferro (brief)'],
+        studyResources: ['Biot-Savart calculations','Ampere\'s law problems','Galvanometer conversion exercises','Videos on magnetic force demos','Lab on solenoid fields']
+      },
+      'electromagnetic-induction': {
+        shortDesc: 'Induced EMF, inductance, and AC circuits',
+        keyConcepts: ['Faraday\'s law: Induced EMF, flux change','Lenz\'s law: Conservation of energy','Motional EMF: In rods, rotating conductors','Self/mutual inductance: Coefficients, energy in inductors','Eddy currents: Applications and damping','AC generator, transformer: Working, efficiency','AC circuits: Reactance, impedance, phasors','Power in AC: Power factor, wattless current'],
+        studyResources: ['Induced EMF numericals','Transformer ratio problems','Phasor diagram drawings','Videos on induction experiments','Lab on mutual induction']
+      },
+      'electromagnetic-waves': {
+        shortDesc: 'Generation, properties, and spectrum of EM waves',
+        keyConcepts: ['Displacement current: Modification of Ampere\'s law','Maxwell\'s equations: Overview','EM waves: Production, transverse nature, speed c = 1/√(μ0ε0)','Properties: Momentum, energy density, Poynting vector','Electromagnetic spectrum: Radio, micro, IR, visible, UV, X, gamma','Uses: Communication, medical, industrial','Ozone layer and greenhouse gases interaction','Hertz experiment and LC oscillations'],
+        studyResources: ['EM spectrum charts with wavelengths','Poynting vector calculations','Maxwell equation applications','Videos on wave propagation','Quiz on spectrum uses']
+      },
+      'optics': {
+        shortDesc: 'Ray and wave optics, optical instruments',
+        keyConcepts: ['Reflection: Laws, mirrors (plane/spherical), image formation','Refraction: Snell\'s law, total internal reflection, prism deviation','Lens: Thin lens formula, magnification, power, combinations','Optical instruments: Microscope, telescope (astronomical, reflecting)','Wave optics: Huygens principle, interference (Young\'s double slit)','Diffraction: Single slit pattern, resolving power','Polarization: By reflection/scattering, Malus law','Optical fibers and mirage'],
+        studyResources: ['Lens/mirror formula problems','Interference fringe calculations','Instrument magnification exercises','Videos on diffraction patterns','Lab on focal length determination']
+      },
+      'dual-nature-of-matter': {
+        shortDesc: 'Particle-wave duality and photoelectric effect',
+        keyConcepts: ['Photoelectric effect: Einstein\'s equation, threshold frequency, stopping potential','Factors affecting photoelectric current','Matter waves: de Broglie wavelength λ = h/p','Davisson-Germer experiment: Electron diffraction','Heisenberg uncertainty principle','Particle in a box (qualitative)','X-rays: Production, properties, Bragg\'s law','Applications in electron microscope, spectroscopy'],
+        studyResources: ['Photoelectric equation numericals','de Broglie wavelength problems','Uncertainty principle applications','Videos on quantum experiments','Graphs of photoelectric data']
+      },
+      'atoms-nuclei': {
+        shortDesc: 'Atomic structure, radioactivity, and nuclear energy',
+        keyConcepts: ['Bohr model: Energy levels, hydrogen spectrum','Quantum mechanical model (brief)','Radioactivity: Alpha/beta/gamma decay, laws of decay','Half-life, mean life, activity','Nuclear binding energy, mass defect','Nuclear reactions: Fission, fusion, chain reaction','Nuclear reactor: Components, moderators, coolants','Applications: Carbon dating, medical isotopes'],
+        studyResources: ['Bohr energy calculations','Decay constant problems','Binding energy curves','Videos on nuclear reactors','Quiz on isotope uses']
+      },
+      'electronic-devices': {
+        shortDesc: 'Semiconductors, diodes, and logic gates',
+        keyConcepts: ['Semiconductors: Intrinsic/extrinsic, doping, p-n junction','Diode: Forward/reverse bias, V-I characteristics','Rectifiers: Half/full wave, filters','Zener diode: Voltage regulator','Transistors: npn/pnp, configurations, amplifier','Logic gates: AND, OR, NOT, NAND, NOR, XOR','Boolean algebra and De Morgan\'s theorems','Integrated circuits intro'],
+        studyResources: ['p-n junction diagrams','Transistor amplifier calculations','Logic gate truth tables','Videos on semiconductor fabrication','Lab on diode characteristics']
+      },
+      'communication-systems': {
+        shortDesc: 'Signal transmission and modulation techniques',
+        keyConcepts: ['Communication elements: Transmitter, channel, receiver','Amplitude modulation (AM): Modulation index, sidebands','Frequency modulation (FM): Advantages over AM','Demodulation and detection','Propagation: Ground/sky/space waves, line of sight','Satellite communication: Uplink/downlink, transponders','Internet and mobile telephony basics','Noise and bandwidth considerations'],
+        studyResources: ['Modulation waveform drawings','Propagation mode comparisons','Satellite orbit calculations','Videos on communication tech','Quiz on signal types']
+      },
+
+      /* BIOLOGY 11 */
+      'diversity-of-living-world': {
+        shortDesc: 'Biodiversity, classification, and taxonomy',
+        keyConcepts: ['Characteristics of living organisms: Growth, reproduction, metabolism, consciousness','Biodiversity: Species diversity, importance, threats','Taxonomic hierarchy: Kingdom to species, binomial nomenclature','Five kingdom classification: Monera, Protista, Fungi, Plantae, Animalia','Viruses, viroids, prions, lichens','Tools: Herbaria, botanical gardens, museums, keys','Three domains: Archaea, Bacteria, Eukarya','Taxonomic categories and obligate categories'],
+        studyResources: ['Classification charts for kingdoms','Binomial naming practice','Biodiversity hotspot maps','Videos on taxonomic tools','Field study project ideas']
+      },
+      'structural-organisation': {
+        shortDesc: 'Morphology and anatomy of plants and animals',
+        keyConcepts: ['Morphology of flowering plants: Root, stem, leaf, flower, fruit, seed modifications','Anatomy: Tissues (meristematic, permanent), dicot/monocot structures','Animal tissues: Epithelial, connective, muscular, neural','Frog morphology and anatomy (as representative)','Earthworm and cockroach: External features, systems','Plant families: Identification features (Fabaceae, Solanaceae, Liliaceae)','Secondary growth in plants: Vascular cambium, cork cambium','Adaptive morphology examples'],
+        studyResources: ['Plant part diagrams and labeling','Tissue type microscope slides','Dissection guides for animals','Videos on plant anatomy sections','Comparison tables for dicot/monocot']
+      },
+      'cell-structure-function': {
+        shortDesc: 'Cell theory, organelles, and division',
+        keyConcepts: ['Cell theory: Historical, prokaryotic/eukaryotic differences','Cell membrane: Fluid mosaic model, transport (active/passive)','Cytoplasm and organelles: ER, Golgi, lysosomes, vacuoles','Mitochondria and plastids: Structure, functions, endosymbiont theory','Nucleus: Chromatin, nucleolus, nuclear envelope','Cytoskeleton: Microtubules, microfilaments, intermediate filaments','Cell division: Mitosis, meiosis, stages and significance','Cell cycle: Phases, checkpoints'],
+        studyResources: ['Organelle function tables','Cell division stage diagrams','Transport mechanism quizzes','Videos on electron microscopy','Lab protocols for cell observation']
+      },
+      'plant-physiology': {
+        shortDesc: 'Plant processes: Transport, nutrition, growth',
+        keyConcepts: ['Transport: Diffusion, osmosis, plasmolysis, water potential','Xylem and phloem: Ascent of sap, transpiration pull, mass flow','Mineral nutrition: Essential elements, deficiency symptoms, nitrogen cycle','Photosynthesis: Sites, pigments, light/dark reactions, C3/C4 pathways','Respiration: Glycolysis, Krebs cycle, ETC, fermentation','Plant growth regulators: Auxins, gibberellins, cytokinins, ethylene, ABA','Photoperiodism, vernalization, seed dormancy','Transpiration and guttation'],
+        studyResources: ['Photosynthesis equation balances','Hormone function experiments','Nutrient deficiency charts','Videos on Calvin cycle','Lab on transpiration rates']
+      },
+      'human-physiology': {
+        shortDesc: 'Body systems: Digestion, circulation, excretion, etc.',
+        keyConcepts: ['Digestion: Alimentary canal, glands, enzymes, absorption','Breathing: Respiratory organs, mechanism, volumes, gas transport','Circulation: Heart structure, cardiac cycle, blood vessels, lymph','Excretion: Kidney structure, nephron, urine formation, disorders','Locomotion: Skeletal/muscular system, joints, muscle contraction','Neural control: Neuron, synapse, CNS/PNS, reflex arc','Chemical coordination: Endocrine glands, hormones, feedback','Reproduction (brief), immune system intro'],
+        studyResources: ['System organ diagrams','Hormone disorder tables','Neural impulse animations','Videos on heart beat','Lab on blood pressure measurement']
+      },
+
+      /* BIOLOGY 12 */
+      'reproduction': {
+        shortDesc: 'Reproductive modes in organisms and humans',
+        keyConcepts: ['Asexual reproduction: Binary fission, budding, fragmentation, vegetative propagation','Sexual reproduction in plants: Flower structure, pollination, double fertilization','Post-fertilization: Embryo development, seed formation, apomixis','Human reproduction: Male/female systems, gametogenesis, menstrual cycle','Fertilization, implantation, embryonic development, parturition','Reproductive health: Contraception, STDs, infertility, ART','Population control and family planning'],
+        studyResources: ['Flower dissection diagrams','Embryo stage timelines','Contraceptive method comparisons','Videos on pollination types','Quiz on reproductive disorders']
+      },
+      'genetics-evolution': {
+        shortDesc: 'Inheritance patterns and evolutionary mechanisms',
+        keyConcepts: ['Mendel\'s laws: Monohybrid/dihybrid crosses, test cross','Extensions: Incomplete dominance, codominance, pleiotropy, polygenic','Chromosomal theory: Linkage, recombination, gene mapping','Sex determination: XX-XY, birds, bees','Mutations: Types, mutagens, genetic disorders (Down, sickle cell)','Human genetics: Pedigree analysis, DNA fingerprinting','Evolution: Theories (Darwin, Lamarck), evidences (fossils, homology)','Mechanisms: Natural selection, genetic drift, Hardy-Weinberg principle','Human evolution: Origin, primates, Homo sapiens'],
+        studyResources: ['Punnett square problems','Pedigree chart analysis','Evolution evidence charts','Videos on natural selection','Hardy-Weinberg equilibrium calculations']
+      },
+      'biology-and-human-welfare': {
+        shortDesc: 'Health, agriculture, and animal husbandry improvements',
+        keyConcepts: ['Human health: Diseases (infectious, non-infectious), immunity types','Pathogens: Bacteria, viruses, protozoans, life cycles (malaria, amoebiasis)','Cancer, drugs, alcohol abuse','Plant breeding: Hybridization, mutation breeding, biofortification','Tissue culture: Micropropagation, somatic hybridization','Animal husbandry: Breeding, dairy, poultry, apiculture, sericulture','Microbes in welfare: Sewage treatment, biogas, biocontrol','Single cell proteins, biofertilizers'],
+        studyResources: ['Disease cycle diagrams','Breeding technique flowcharts','Microbe application lists','Videos on immunity response','Project on local farming practices']
+      },
+      'biotechnology-applications': {
+        shortDesc: 'Genetic engineering and its uses',
+        keyConcepts: ['Principles: Recombinant DNA, restriction enzymes, vectors','Tools: Plasmids, bacteriophages, competent cells','Processes: PCR, gel electrophoresis, cloning','Applications: Bt cotton, insulin production, gene therapy','Transgenics: Golden rice, flavr savr tomato','Biopiracy and patents','Ethical issues in biotechnology','Biosafety and regulations'],
+        studyResources: ['rDNA technology steps diagrams','PCR cycle animations','Transgenic crop case studies','Videos on gene cloning','Debate topics on ethics']
+      },
+      'ecology-environment': {
+        shortDesc: 'Ecosystems, biodiversity, and environmental issues',
+        keyConcepts: ['Organisms and environment: Habitat, niche, abiotic/biotic factors','Population: Attributes, growth models, interactions (predation, competition)','Ecosystem: Structure, energy flow, pyramids, nutrient cycles (C, N, P)','Succession: Primary/secondary, climax community','Biodiversity: Conservation, hotspots, endangered species','Pollution: Air, water, soil, noise, control measures','Global issues: Ozone depletion, global warming, deforestation','Environmental acts and sustainable development'],
+        studyResources: ['Ecosystem component charts','Nutrient cycle diagrams','Pollution control strategies','Videos on biodiversity loss','Field surveys for local ecology']
+      }
+    };
+
+    function renderGrid(gridId, files){
+      const el = document.getElementById(gridId);
+      el.innerHTML = '';
+      files.forEach(f=>{
+        const title = humanize(f);
+        const meta = TOPIC_META[f] || {
+          shortDesc: 'Key concepts are being added...',
+          keyConcepts: ['Summary coming soon — consider adding specific key points here'],
+          studyResources: ['Add resource links or notes in TOPIC_META']
+        };
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('data-topic', f);
+        card.innerHTML = `
+          <div class="card-header">
+            <h3>${title}</h3>
+            <p>${meta.shortDesc || 'Click to expand and learn more'}</p>
+          </div>
+          <button class="expand-btn" aria-expanded="false">View Details</button>
+          <div class="card-content" aria-hidden="true">
+            <h4>Key Concepts:</h4>
+            <ul>
+              ${meta.keyConcepts.map(k=>`<li>${k}</li>`).join('')}
+            </ul>
+            <h4>Study Resources:</h4>
+            <ul>
+              ${meta.studyResources.map(r=>`<li>${r}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+
+        // Toggle expansion only when clicking the button or the header — prevents accidental collapse when interacting with content
+        const expandBtn = card.querySelector('.expand-btn');
+        const header = card.querySelector('.card-header');
+        const content = card.querySelector('.card-content');
+
+        function openCard(){
+          // close others in same grid
+          document.querySelectorAll(`#${gridId} .card.expanded`).forEach(otherCard => { if(otherCard !== card) otherCard.classList.remove('expanded'); otherCard.querySelector('.expand-btn')?.setAttribute('aria-expanded','false'); otherCard.querySelector('.card-content')?.setAttribute('aria-hidden','true'); });
+          card.classList.add('expanded');
+          expandBtn.setAttribute('aria-expanded','true');
+          content.setAttribute('aria-hidden','false');
+          setTimeout(()=> card.scrollIntoView({behavior:'smooth', block:'nearest'}), 90);
+        }
+        function closeCard(){
+          card.classList.remove('expanded');
+          expandBtn.setAttribute('aria-expanded','false');
+          content.setAttribute('aria-hidden','true');
+        }
+
+        expandBtn.addEventListener('click', (ev)=>{ ev.stopPropagation(); if(card.classList.contains('expanded')) closeCard(); else openCard(); });
+        header.addEventListener('click', (ev)=>{ ev.stopPropagation(); if(card.classList.contains('expanded')) closeCard(); else openCard(); });
+
+        el.appendChild(card);
+      });
+    }
+
+    // ===== File Lists =====
+    const chem11 = [
+      'some-basic-concepts-of-chemistry','structure-of-atom','classification-of-elements','chemical-bonding','states-of-matter','thermodynamics','equilibrium','redox-reactions','hydrogen','s-block-element','p-block-element-group-13-14','organic-chemistry-basics','hydrocarbons','environmental-chemistry'
+    ];
+    const chem12 = [
+      'solid-state','solutions','electrochemistry','chemical-kinetics','surface-chemistry','isolation-of-elements','p-block-element-group-15-18','d-block-element','f-block-element','haloalkanes-haloarenes','alcohols-phenols-ethers','aldehydes-ketones-carboxylic-acids','amines','biomolecules','polymers','chemistry-in-everyday-life'
+    ];
+
+    const phy11 = [
+      'physical-world-measurement','kinematics','laws-of-motion','work-energy-power','motion-of-system-of-particles','gravitation','properties-of-bulk-matter','thermodynamics-physics','kinetic-theory','oscillations-waves'
+    ];
+    const phy12 = [
+      'electrostatics','current-electricity','magnetic-effects-of-current','electromagnetic-induction','electromagnetic-waves','optics','dual-nature-of-matter','atoms-nuclei','electronic-devices','communication-systems'
+    ];
+
+    const bio11 = [
+      'diversity-of-living-world','structural-organisation','cell-structure-function','plant-physiology','human-physiology'
+    ];
+    const bio12 = [
+      'reproduction','genetics-evolution','biology-and-human-welfare','biotechnology-applications','ecology-environment'
+    ];
+
+    // Render grids
+    renderGrid('chem11', chem11);
+    renderGrid('chem12', chem12);
+    renderGrid('phy11', phy11);
+    renderGrid('phy12', phy12);
+    renderGrid('bio11', bio11);
+    renderGrid('bio12', bio12);
+
+    // ===== Chemistry: Element & Group Finder =====
+    const ELEMENTS = [
+      [1,'H','Hydrogen',1,1],[2,'He','Helium',18,1],
+      [3,'Li','Lithium',1,2],[4,'Be','Beryllium',2,2],[5,'B','Boron',13,2],[6,'C','Carbon',14,2],[7,'N','Nitrogen',15,2],[8,'O','Oxygen',16,2],[9,'F','Fluorine',17,2],[10,'Ne','Neon',18,2],
+      [11,'Na','Sodium',1,3],[12,'Mg','Magnesium',2,3],[13,'Al','Aluminium',13,3],[14,'Si','Silicon',14,3],[15,'P','Phosphorus',15,3],[16,'S','Sulfur',16,3],[17,'Cl','Chlorine',17,3],[18,'Ar','Argon',18,3],
+      [19,'K','Potassium',1,4],[20,'Ca','Calcium',2,4],[21,'Sc','Scandium',3,4],[22,'Ti','Titanium',4,4],[23,'V','Vanadium',5,4],[24,'Cr','Chromium',6,4],[25,'Mn','Manganese',7,4],[26,'Fe','Iron',8,4],[27,'Co','Cobalt',9,4],[28,'Ni','Nickel',10,4],[29,'Cu','Copper',11,4],[30,'Zn','Zinc',12,4],[31,'Ga','Gallium',13,4],[32,'Ge','Germanium',14,4],[33,'As','Arsenic',15,4],[34,'Se','Selenium',16,4],[35,'Br','Bromine',17,4],[36,'Kr','Krypton',18,4],
+      [37,'Rb','Rubidium',1,5],[38,'Sr','Strontium',2,5],[39,'Y','Yttrium',3,5],[40,'Zr','Zirconium',4,5],[41,'Nb','Niobium',5,5],[42,'Mo','Molybdenum',6,5],[43,'Tc','Technetium',7,5],[44,'Ru','Ruthenium',8,5],[45,'Rh','Rhodium',9,5],[46,'Pd','Palladium',10,5],[47,'Ag','Silver',11,5],[48,'Cd','Cadmium',12,5],[49,'In','Indium',13,5],[50,'Sn','Tin',14,5],[51,'Sb','Antimony',15,5],[52,'Te','Tellurium',16,5],[53,'I','Iodine',17,5],[54,'Xe','Xenon',18,5],
+      [55,'Cs','Cesium',1,6],[56,'Ba','Barium',2,6],[72,'Hf','Hafnium',4,6],[73,'Ta','Tantalum',5,6],[74,'W','Tungsten',6,6],[75,'Re','Rhenium',7,6],[76,'Os','Osmium',8,6],[77,'Ir','Iridium',9,6],[78,'Pt','Platinum',10,6],[79,'Au','Gold',11,6],[80,'Hg','Mercury',12,6],[81,'Tl','Thallium',13,6],[82,'Pb','Lead',14,6],[83,'Bi','Bismuth',15,6],[84,'Po','Polonium',16,6],[85,'At','Astatine',17,6],[86,'Rn','Radon',18,6],
+      [87,'Fr','Francium',1,7],[88,'Ra','Radium',2,7],[104,'Rf','Rutherfordium',4,7],[105,'Db','Dubnium',5,7],[106,'Sg','Seaborgium',6,7],[107,'Bh','Bohrium',7,7],[108,'Hs','Hassium',8,7],[109,'Mt','Meitnerium',9,7],[110,'Ds','Darmstadtium',10,7],[111,'Rg','Roentgenium',11,7],[112,'Cn','Copernicium',12,7],[113,'Nh','Nihonium',13,7],[114,'Fl','Flerovium',14,7],[115,'Mc','Moscovium',15,7],[116,'Lv','Livermorium',16,7],[117,'Ts','Tennessine',17,7],[118,'Og','Oganesson',18,7]
+    ];
+
+    const GROUP_META = {
+      1: 'Group 1 — Alkali Metals (H behaves uniquely)',
+      2: 'Group 2 — Alkaline Earth Metals',
+      3: 'Group 3 — Scandium Group',
+      4: 'Group 4 — Titanium Group',
+      5: 'Group 5 — Vanadium Group',
+      6: 'Group 6 — Chromium Group',
+      7: 'Group 7 — Manganese Group',
+      8: 'Group 8 — Iron Group',
+      9: 'Group 9 — Cobalt Group',
+      10: 'Group 10 — Nickel Group',
+      11: 'Group 11 — Coinage Metals',
+      12: 'Group 12 — Zinc Group',
+      13: 'Group 13 — Boron/Triels',
+      14: 'Group 14 — Carbon/Tetrels',
+      15: 'Group 15 — Nitrogen/Pnictogens',
+      16: 'Group 16 — Oxygen/Chalcogens',
+      17: 'Group 17 — Halogens',
+      18: 'Group 18 — Noble Gases'
+    };
+
+    // Populate group select
+    const groupSelect = document.getElementById('groupSelect');
+    groupSelect.innerHTML = '<option value="">— Select group (1–18) —</option>' + Array.from({length:18}, (_,i)=>`<option value="${i+1}">Group ${i+1}</option>`).join('');
+
+    groupSelect.addEventListener('change', ()=>{
+      const g = parseInt(groupSelect.value,10);
+      if(!g){ document.getElementById('groupResult').textContent = 'Pick a group to see key members.'; return; }
+      const members = ELEMENTS.filter(e=>e[3]===g).map(e=>`${e[1]} (${e[2]})`).slice(0,12);
+      document.getElementById('groupResult').innerHTML = `<div class="helper">${GROUP_META[g] || ''}</div>` +
+        (members.length? '<div>'+members.map(x=>`<span class="pill">${x}</span>`).join('')+'</div>' : '<div class="helper">No members listed yet.</div>');
+    });
+
+    // Search by symbol/name
+    const elSearch = document.getElementById('elSearch');
+    const elSearchBtn = document.getElementById('elSearchBtn');
+    function lookupElement(){
+      const q = (elSearch.value||'').trim();
+      if(!q){document.getElementById('elResult').textContent='Type a symbol/name and press Enter or tap Search.';return}
+      const hit = ELEMENTS.find(e=> e[1].toLowerCase()===q.toLowerCase() || e[2].toLowerCase()===q.toLowerCase());
+      if(!hit){ document.getElementById('elResult').textContent = 'Not found in the starter list. You can expand the dataset in code if needed.'; return; }
+      const [Z,sym,name,group,period] = hit;
+      document.getElementById('elResult').innerHTML = `<div class="pill">${name} (${sym})</div><div class="helper">Atomic No: ${Z} · Group: ${group} · Period: ${period}</div>`;
+    }
+    elSearch.addEventListener('keydown', (e)=>{ if(e.key==='Enter') lookupElement() });
+    elSearchBtn.addEventListener('click', lookupElement);
+
+  </script>
+  <!-- Tawk.to (optional) -->
+  <script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];s1.async=true;s1.src='https://embed.tawk.to/68b552e12ccfc9192268fac6/1j424nh31';s1.charset='UTF-8';s1.setAttribute('crossorigin','*');s0.parentNode.insertBefore(s1,s0);})();
+  </script>
+</body>
+</html>
